@@ -8,7 +8,7 @@
 #### Default Prerequisites
 This is a quick tutorial on how you can install proprietary nvidia drivers for Arch Linux. Please note if you are using anything other than the regular linux kernel, such as linux-lts, you need to make changes accordingly. All the commands marked with ***like this*** are meant to be run on the terminal. **Do not reboot before you have finished all the steps below!**
 
-## Step 1: Installing required packages and yay
+## Step 1: Installing required packages and enable multilib
 1. Update the system: ***sudo pacman -Syu***
 2. Install required packages: ***sudo pacman -S base-devel linux-headers git***
 3. Install yay, please replace the [YOUR USERNAME HERE] with your linux username without the '[' and ']':
@@ -16,6 +16,9 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 - ***sudo chown -R [YOUR USERNAME HERE]:users yay***
 - ***cd yay***
 - ***makepkg -si***
+4. Enable multilib repository
+- ***sudo nano /etc/pacman.conf***
+- Uncomment lines that have *[multilib]* and *Include = /etc/pacman.d/mirrorlist*
 
 ## Step 2: Installing the driver packages
 1. This step might be a bit confusing. First find your [nvidia card from this list here](https://nouveau.freedesktop.org/CodeNames.html)
