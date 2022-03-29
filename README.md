@@ -19,6 +19,7 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 4. Enable multilib repository
 - ***sudo nano /etc/pacman.conf***
 - Uncomment lines that have *[multilib]* and *Include = /etc/pacman.d/mirrorlist*
+- ***sudo pacman -Syy***
 
 ## Step 2: Installing the driver packages
 1. This step might be a bit confusing. First find your [nvidia card from this list here](https://nouveau.freedesktop.org/CodeNames.html)
