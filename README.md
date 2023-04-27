@@ -11,11 +11,12 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 ## Step 1: Installing required packages and enable multilib
 1. Update the system: ***sudo pacman -Syu***
 2. Install required packages: ***sudo pacman -S base-devel linux-headers git***
-3. Install yay, please replace the [YOUR USERNAME HERE] with your linux username without the '[' and ']':
-- ***sudo git clone https://aur.archlinux.org/yay.git***
-- ***sudo chown -R [YOUR USERNAME HERE]:users yay***
-- ***cd yay***
-- ***makepkg -si***
+ ```
+  cd ~
+  git clone https://aur.archlinux.org/yay.git
+  cd yay
+  makepkg -si
+```
 4. Enable multilib repository
 - ***sudo nano /etc/pacman.conf***
 - Uncomment lines that have *[multilib]* and *Include = /etc/pacman.d/mirrorlist*
