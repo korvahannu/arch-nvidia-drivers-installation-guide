@@ -50,7 +50,7 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 - Find ```MODULES=()```
 - Edit the line to match ```MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)```
 - Save the file with *CTRL+O*
-- Finish the mkinitcpio configuration with ```sudo mkinitcpio -p```
+- Finish the mkinitcpio configuration with ```sudo mkinitcpio -P```
 3. Adding the pacman hook
 - Find the *nvidia.hook* in this repository, make a local copy and open the file with your preferred editor
 - Find ```Target=nvidia```
