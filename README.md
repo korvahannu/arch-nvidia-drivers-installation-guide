@@ -34,7 +34,8 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 ## Step 2: Installing the driver packages
 
 1. This step might be a bit confusing. First find your [nvidia card from this list here](https://nouveau.freedesktop.org/CodeNames.html)
-2. Check what driver packages you need to install from the list below
+2. After reading if you still don't know what driver you need, take a look of that list on gentoo wiki [here](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support) that lists the latest driver that supports your CHIPSET. For example, if you have a GTX 3060, you need to install the latest version of nvidia, so just `yay -S nvidia nvidia-utils lib32-nvidia-utils`.
+3. Check what driver packages you need to install from the list below
 
 | Driver name                                      | Base driver       | OpenGL             | OpenGL (multilib)        |
 | ------------------------------------------------ | ----------------- | ------------------ | ------------------------ |
