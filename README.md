@@ -11,7 +11,7 @@
 
 This is a quick tutorial on how you can install proprietary NVIDIA drivers for Arch Linux. Please note if you are using anything other than the regular linux kernel, such as linux-lts, you need to make changes accordingly. All the commands marked with `like this` are meant to be run on the terminal. **Do not reboot before you have finished all the steps below!**
 
-## Step 1: Installing required packages and enable multilib
+## Step 1: Installing required packages and enabling multilib
 
 1. Update the system:
    `sudo pacman -Syu`
@@ -27,14 +27,17 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 ```
 
 4. Enable multilib repository
-   `sudo nano /etc/pacman.conf`
-
-- Uncomment lines that have `[multilib]` and `Include = /etc/pacman.d/mirrorlist`, and then run `yay -Syu`, to update the system package database. Do not run `yay -Syy`, as that may cause a partial upgrade.
+   - `sudo nano /etc/pacman.conf`
+   - Uncomment the lines
+     - **[multilib]**
+     - **Include = /etc/pacman.d/mirrorlist**
+   - Run `yay -Syu`, to update the system package database
+   - Save the file with _CTRL+O_
 
 ## Step 2: Installing the driver packages
 
-1. This step might be a bit confusing. First find your [NVIDIA card from this list here](https://nouveau.freedesktop.org/CodeNames.html). Alternatively you can take a look at the [Gentoo wiki](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support).
-2. Check what driver packages you need to install from the list below
+1. First find your [NVIDIA card from this list here](https://nouveau.freedesktop.org/CodeNames.html). Alternatively you can take a look at the [Gentoo wiki](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support).
+2. Check what driver packages you need to install from the table below
 
 | Driver name                                      | Base driver       | OpenGL             | OpenGL (multilib)        |
 | ------------------------------------------------ | ----------------- | ------------------ | ------------------------ |
@@ -49,47 +52,50 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 
 ## Step 3: Enabling DRM kernel mode setting
 
-In this step please complete the parts: _Setting the Kernel Parameter_, _Add Early Loading of NVIDIA Modules_, and _Adding the Pacman Hook_.
+In this step please complete all the parts: _Setting the Kernel Parameter_, _Add Early Loading of NVIDIA Modules_, and _Adding the Pacman Hook_.
 
 ### Setting the Kernel Parameter:
 
-Setting the kernel parameter depends on what bootloader you are using. Complete the part that describes the configuration steps for the bootloader you use and continue to _Add Early Loading of NVIDIA Modules_.
+Setting the kernel parameter depends on what bootloader you are using. Complete the part that describes the configuration steps for the bootloader you use. After that, continue to _Add Early Loading of NVIDIA Modules_.
 
 #### For GRUB users:
 
 1. Edit the GRUB configuration file:
    - `sudo nano /etc/default/grub`
-   - Find `GRUB_CMDLINE_LINUX_DEFAULT`.
-   - Append the line with `nvidia-drm.modeset=1`.
-   - Example: `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"`.
-   - Save the file with _CTRL+O_.
-2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`.
+   - Find the line with **GRUB_CMDLINE_LINUX_DEFAULT**
+   - Append the words inside the quotes with **nvidia-drm.modeset=1**
+     - Example: **GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"**
+   - Save the file with _CTRL+O_
+2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`
 
 #### For systemd-boot users:
 
-1. Navigate to the bootloader entries directory: `/boot/loader/entries/`.
-2. Edit the appropriate `.conf` file for your Arch Linux boot entry.
-3. Append `nvidia-drm.modeset=1` to the `options` line.
-4. Save and exit.
+1. Navigate to the bootloader entries directory: `cd /boot/loader/entries/`
+2. Edit the appropriate **.conf** file for your Arch Linux boot entry
+   - `sudo nano <filename>.conf`
+3. Append **nvidia-drm.modeset=1** to the **options** line
+4. Save the file with _CTRL+O_
 
 ### Add Early Loading of NVIDIA Modules:
 
-1. Edit the `mkinitcpio` configuration file:
+1. Edit the **mkinitcpio** configuration file:
    - `sudo nano /etc/mkinitcpio.conf`
-   - Find `MODULES=()`.
-   - Update the line to: `MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)`.
-   - Save the file with _CTRL+O_.
-2. Regenerate the initramfs: `sudo mkinitcpio -P`.
+   - Find the line that says **MODULES=()**
+   - Update the line to: **MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)**
+   - Save the file with _CTRL+O_
+2. Regenerate the initramfs with `sudo mkinitcpio -P`
 
 ### Adding the Pacman Hook:
 
-1. Locate the `nvidia.hook` in this repository and make a local copy.
+1. Locate the **nvidia.hook** in this repository and make a local copy.
+   - You may use `wget https://raw.githubusercontent.com/korvahannu/arch-nvidia-drivers-installation-guide/main/nvidia.hook` to get the file easily to your current working directory.
 2. Open the file with your preferred editor.
-3. Find `Target=nvidia`.
-4. Replace `nvidia` with the base driver you installed, e.g., `nvidia-470xx-dkms`.
-5. Save the file.
-6. Move it to `/etc/pacman.d/hooks/`:
-   - `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`.
+   - `sudo nano nvidia.hook`
+3. Find the line that says **Target=nvidia**.
+4. Replace the word **nvidia** with the base driver you installed, e.g., **nvidia-470xx-dkms**
+   - The end result should look something like **Target=nvidia-470xx-dkms**
+5. Save the file with _CTRL+O_
+6. Move it to _/etc/pacman.d/hooks/_ with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
 
 ## Step 4: Reboot and enjoy!
 
