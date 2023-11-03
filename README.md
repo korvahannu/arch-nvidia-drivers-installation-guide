@@ -1,4 +1,4 @@
-# Arch Linux nvidia drivers installation guide
+# Arch Linux NVIDIA drivers installation guide
 
 ![Arch Linux Logo](https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.ebdee92a15b3.png)
 
@@ -9,7 +9,7 @@
 
 ## Default Prerequisites
 
-This is a quick tutorial on how you can install proprietary nvidia drivers for Arch Linux. Please note if you are using anything other than the regular linux kernel, such as linux-lts, you need to make changes accordingly. All the commands marked with `like this` are meant to be run on the terminal. **Do not reboot before you have finished all the steps below!**
+This is a quick tutorial on how you can install proprietary NVIDIA drivers for Arch Linux. Please note if you are using anything other than the regular linux kernel, such as linux-lts, you need to make changes accordingly. All the commands marked with `like this` are meant to be run on the terminal. **Do not reboot before you have finished all the steps below!**
 
 ## Step 1: Installing required packages and enable multilib
 
@@ -33,9 +33,8 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 
 ## Step 2: Installing the driver packages
 
-1. This step might be a bit confusing. First find your [nvidia card from this list here](https://nouveau.freedesktop.org/CodeNames.html)
-2. After reading if you still don't know what driver you need, take a look of that list on gentoo wiki [here](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support) that lists the latest driver that supports your CHIPSET. For example, if you have a GTX 3060, you need to install the latest version of nvidia, so just `yay -S nvidia nvidia-utils lib32-nvidia-utils`.
-3. Check what driver packages you need to install from the list below
+1. This step might be a bit confusing. First find your [NVIDIA card from this list here](https://nouveau.freedesktop.org/CodeNames.html). Alternatively you can take a look at the [Gentoo wiki](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support).
+2. Check what driver packages you need to install from the list below
 
 | Driver name                                      | Base driver       | OpenGL             | OpenGL (multilib)        |
 | ------------------------------------------------ | ----------------- | ------------------ | ------------------------ |
@@ -46,13 +45,15 @@ This is a quick tutorial on how you can install proprietary nvidia drivers for A
 3. Install the correct packages, for example `yay -S nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils`
 4. I also recommend you to install nvidia-settings via `yay -S nvidia-settings`
 
-That's a great initiative! I appreciate your efforts to contribute back to the community. Here's an updated section of your guide that includes information on setting kernel parameters for both GRUB and `systemd-boot`:
-
 ---
 
 ## Step 3: Enabling DRM kernel mode setting
 
+In this step please complete the parts: _Setting the Kernel Parameter_, _Add Early Loading of NVIDIA Modules_, and _Adding the Pacman Hook_.
+
 ### Setting the Kernel Parameter:
+
+Setting the kernel parameter depends on what bootloader you are using. Complete the part that describes the configuration steps for the bootloader you use and continue to _Add Early Loading of NVIDIA Modules_.
 
 #### For GRUB users:
 
@@ -62,9 +63,9 @@ That's a great initiative! I appreciate your efforts to contribute back to the c
    - Append the line with `nvidia-drm.modeset=1`.
    - Example: `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"`.
    - Save the file with _CTRL+O_.
-   - Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`.
+2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`.
 
-#### For `systemd-boot` users:
+#### For systemd-boot users:
 
 1. Navigate to the bootloader entries directory: `/boot/loader/entries/`.
 2. Edit the appropriate `.conf` file for your Arch Linux boot entry.
@@ -78,7 +79,7 @@ That's a great initiative! I appreciate your efforts to contribute back to the c
    - Find `MODULES=()`.
    - Update the line to: `MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)`.
    - Save the file with _CTRL+O_.
-   - Regenerate the initramfs: `sudo mkinitcpio -P`.
+2. Regenerate the initramfs: `sudo mkinitcpio -P`.
 
 ### Adding the Pacman Hook:
 
@@ -92,4 +93,4 @@ That's a great initiative! I appreciate your efforts to contribute back to the c
 
 ## Step 4: Reboot and enjoy!
 
-You can now safely reboot and enjoy the proprietary nvidia drivers. If you have any problems check the Arch Linux Wiki or the forums for common pitfalls and questions.
+You can now safely reboot and enjoy the proprietary NVIDIA drivers. If you have any problems check the Arch Linux Wiki or the forums for common pitfalls and questions.
