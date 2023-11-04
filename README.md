@@ -45,8 +45,9 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 | Kepler (NVE0) series                             | nvidia-470xx-dkms | nvidia-470xx-utils | lib32-nvidia-470xx-utils |
 | GeForce 400/500/600 series cards [NVCx and NVDx] | nvidia-390xx      | nvidia-390xx-utils | lib32-nvidia-390xx-utils |
 
-3. Install the correct packages, for example `yay -S nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils`
-4. I also recommend you to install nvidia-settings via `yay -S nvidia-settings`
+3. Install the correct Base driver, OpenGL, and OpenGL (multilib) packages
+   - Example: `yay -S nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils`
+4. Install nvidia-settings with `yay -S nvidia-settings`
 
 ---
 
@@ -87,10 +88,11 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
 
 ### Adding the Pacman Hook:
 
-1. Locate the **nvidia.hook** in this repository and make a local copy.
-   - You may use `wget https://raw.githubusercontent.com/korvahannu/arch-nvidia-drivers-installation-guide/main/nvidia.hook` to get the file easily to your current working directory.
+1. Get the **nvidia.hook** -file from this repository
+   - `cd ~`
+   - `wget https://raw.githubusercontent.com/korvahannu/arch-nvidia-drivers-installation-guide/main/nvidia.hook`
 2. Open the file with your preferred editor.
-   - `sudo nano nvidia.hook`
+   - `nano nvidia.hook`
 3. Find the line that says **Target=nvidia**.
 4. Replace the word **nvidia** with the base driver you installed, e.g., **nvidia-470xx-dkms**
    - The end result should look something like **Target=nvidia-470xx-dkms**

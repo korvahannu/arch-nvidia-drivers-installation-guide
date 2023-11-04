@@ -5,7 +5,8 @@ Operation=Remove
 Type=Package
 Target=nvidia
 Target=linux
-# Change the linux part above and in the Exec line if a different kernel is used
+# Adjust line(6) above to match your driver, e.g. Target=nvidia-470xx-dkms
+# Change line(7) above, if you are not using the regular kernel For example, Target=linux-lts
 
 [Action]
 Description=Update Nvidia module in initcpio
