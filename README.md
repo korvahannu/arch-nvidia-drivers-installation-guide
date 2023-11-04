@@ -95,7 +95,7 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
 4. Replace the word **nvidia** with the base driver you installed, e.g., **nvidia-470xx-dkms**
    - The end result should look something like **Target=nvidia-470xx-dkms**
 5. Save the file with _CTRL+O_
-6. Move it to _/etc/pacman.d/hooks/_ with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
+6. Move it to **/etc/pacman.d/hooks/** with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
 
 ## Step 4: Reboot and enjoy!
 
