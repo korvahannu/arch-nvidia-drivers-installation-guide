@@ -31,8 +31,8 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
    - Uncomment the lines
      - **[multilib]**
      - **Include = /etc/pacman.d/mirrorlist**
-   - Run `yay -Syu`, to update the system package database
    - Save the file with _CTRL+O_
+   - Run `yay -Syu`, to update the system package database
 
 ## Step 2: Installing the driver packages
 
