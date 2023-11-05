@@ -9,7 +9,7 @@
 
 ## Default Prerequisites
 
-This is a quick tutorial on how you can install proprietary NVIDIA drivers for Arch Linux. Please note if you are using anything other than the regular linux kernel, such as linux-lts, you need to make changes accordingly. All the commands marked with `like this` are meant to be run on the terminal. **Do not reboot before you have finished all the steps below!**
+This is a quick tutorial on how you can install proprietary NVIDIA drivers for Arch Linux. Please note if you are using anything other than the regular linux kernel, such as linux-lts, you need to make changes accordingly. All the commands marked `like this` are meant to be run on the terminal. **Do not reboot before you have finished all the steps below!**
 
 ## Step 1: Installing required packages and enabling multilib
 
