@@ -49,8 +49,6 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
    - Example: `yay -S nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils`
 4. Install nvidia-settings with `yay -S nvidia-settings`
 
----
-
 ## Step 3: Enabling DRM kernel mode setting
 
 In this step please complete all the parts: _Setting the Kernel Parameter_, _Add Early Loading of NVIDIA Modules_, and _Adding the Pacman Hook_.
