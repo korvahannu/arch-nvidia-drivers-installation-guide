@@ -81,6 +81,7 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
    - `sudo nano /etc/mkinitcpio.conf`
    - Find the line that says **MODULES=()**
    - Update the line to: **MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)**
+   - Remove kms from the HOOKS array, this will prevent the initramfs from containing the nouveau module making sure the kernel cannot load it during early boot. 
    - Save the file with _CTRL+O_
 2. Regenerate the initramfs with `sudo mkinitcpio -P`
 
