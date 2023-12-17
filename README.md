@@ -39,11 +39,13 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 1. First find your [NVIDIA card from this list here](https://nouveau.freedesktop.org/CodeNames.html). Alternatively you can take a look at the [Gentoo wiki](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support).
 2. Check what driver packages you need to install from the table below
 
-| Driver name                                      | Base driver       | OpenGL             | OpenGL (multilib)        |
-| ------------------------------------------------ | ----------------- | ------------------ | ------------------------ |
-| Maxwell (NV110) series and newer                 | nvidia            | nvidia-utils       | lib32-nvidia-utils       |
-| Kepler (NVE0) series                             | nvidia-470xx-dkms | nvidia-470xx-utils | lib32-nvidia-470xx-utils |
-| GeForce 400/500/600 series cards [NVCx and NVDx] | nvidia-390xx      | nvidia-390xx-utils | lib32-nvidia-390xx-utils |
+| Driver name                                      | Kernel             | Base driver       | OpenGL             | OpenGL (multilib)        |
+| ------------------------------------------------ | ------------------ | ----------------- | ------------------ | ------------------------ |
+| Maxwell (NV110) series and newer                 | linux or linux-lts | nvidia            | nvidia-utils       | lib32-nvidia-utils       |
+| Maxwell (NV110) series and newer                 | other kernels      | nvidia-dkms       | nvidia-utils       | lib32-nvidia-utils       |
+| Kepler (NVE0) series                             | any                | nvidia-470xx-dkms | nvidia-470xx-utils | lib32-nvidia-470xx-utils |
+| GeForce 400/500/600 series cards [NVCx and NVDx] | any                | nvidia-390xx-dkms | nvidia-390xx-utils | lib32-nvidia-390xx-utils |
+| Tesla (NV50/G80-90-GT2XX)                        | any                | nvidia-340xx-dkms | nvidia-340xx-utils | lib32-nvidia-340xx-utils |
 
 3. Install the correct Base driver, OpenGL, and OpenGL (multilib) packages
    - Example: `yay -S nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils`
@@ -55,7 +57,7 @@ In this step please complete all the parts: _Setting the Kernel Parameter_, _Add
 
 ### Setting the Kernel Parameter:
 
-Setting the kernel parameter depends on what bootloader you are using and on the driver version. Complete only one of the options below (A, B, or C). After that, continue to _Add Early Loading of NVIDIA Modules_. You can check the driver version using the `nvidia-smi` utility that comes with the `nvidia-utils` -package
+Setting the kernel parameter depends on what bootloader you are using and on the driver version. Complete only one of the options below (A, B, or C). After that, continue to _Add Early Loading of NVIDIA Modules_. You can check the driver version using the `nvidia-smi` -command that comes with the `nvidia-utils` -package
 
 #### Option A) For driver versions >= 545
 
