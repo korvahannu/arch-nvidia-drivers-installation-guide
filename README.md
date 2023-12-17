@@ -18,21 +18,17 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 2. Install required packages:
    `sudo pacman -S base-devel linux-headers git --needed`
 3. Install the AUR helper, yay
-
-```
- cd ~
- git clone https://aur.archlinux.org/yay.git
- cd yay
- makepkg -si
-```
-
+   - `cd ~`
+   - `git clone https://aur.archlinux.org/yay.git`
+   - `cd yay`
+   - `makepkg -si`
 4. Enable multilib repository
    - `sudo nano /etc/pacman.conf`
-   - Uncomment the lines
+   - Uncomment the following lines by removing the # -character at the start them
      - **[multilib]**
      - **Include = /etc/pacman.d/mirrorlist**
-   - Save the file with _CTRL+O_
-   - Run `yay -Syu`, to update the system package database
+   - Save the file with _CTRL+S_ and close nano with _CTRL+X_
+5. Run `yay -Syu`, to update the system package database
 
 ## Step 2: Installing the driver packages
 
@@ -74,7 +70,7 @@ Setting the kernel parameter depends on what bootloader you are using and on the
    - Find the line with **GRUB_CMDLINE_LINUX_DEFAULT**
    - Append the words inside the quotes with **nvidia-drm.modeset=1**
      - Example: **GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"**
-   - Save the file with _CTRL+O_
+   - Save the file with _CTRL+S_ and close nano with _CTRL+X_
 2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`
 
 #### Option C) For systemd-boot users with driver version < 545
@@ -83,7 +79,7 @@ Setting the kernel parameter depends on what bootloader you are using and on the
 2. Edit the appropriate **.conf** file for your Arch Linux boot entry
    - `sudo nano <filename>.conf`
 3. Append **nvidia-drm.modeset=1** to the **options** line
-4. Save the file with _CTRL+O_
+4. Save the file with _CTRL+S_ and close nano with _CTRL+X_
 
 ### Add Early Loading of NVIDIA Modules:
 
@@ -92,8 +88,8 @@ Setting the kernel parameter depends on what bootloader you are using and on the
    - Find the line that says **MODULES=()**
    - Update the line to: **MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)**
    - Find the line that says **HOOKS=()**
-   - On the same line, find the word **kms** inside the parenthesis and remove it
-   - Save the file with _CTRL+O_
+   - On the **HOOKS=()** line, find the word **kms** inside the parenthesis and remove it
+   - Save the file with _CTRL+S_ and close nano with _CTRL+X_
 2. Regenerate the initramfs with `sudo mkinitcpio -P`
 
 ### Adding the Pacman Hook:
@@ -105,9 +101,9 @@ Setting the kernel parameter depends on what bootloader you are using and on the
    - `nano nvidia.hook`
 3. Find the line that says **Target=nvidia**.
 4. Replace the word **nvidia** with the base driver you installed, e.g., **nvidia-470xx-dkms**
-   - The end result should look something like **Target=nvidia-470xx-dkms**
-5. Save the file with _CTRL+O_
-6. Move it to **/etc/pacman.d/hooks/** with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
+   - The edited line should look something like this: **Target=nvidia-470xx-dkms**
+5. Save the file with _CTRL+S_ and close nano with _CTRL+X_
+6. Move the file to **/etc/pacman.d/hooks/** with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
 
 ## Step 4: Reboot and enjoy!
 
