@@ -18,32 +18,30 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 2. Install required packages:
    `sudo pacman -S base-devel linux-headers git --needed`
 3. Install the AUR helper, yay
-
-```
- cd ~
- git clone https://aur.archlinux.org/yay.git
- cd yay
- makepkg -si
-```
-
+   - `cd ~`
+   - `git clone https://aur.archlinux.org/yay.git`
+   - `cd yay`
+   - `makepkg -si`
 4. Enable multilib repository
    - `sudo nano /etc/pacman.conf`
-   - Uncomment the lines
+   - Uncomment the following lines by removing the # -character at the start them
      - **[multilib]**
      - **Include = /etc/pacman.d/mirrorlist**
-   - Save the file with _CTRL+O_
-   - Run `yay -Syu`, to update the system package database
+   - Save the file with _CTRL+S_ and close nano with _CTRL+X_
+5. Run `yay -Syu`, to update the system package database
 
 ## Step 2: Installing the driver packages
 
 1. First find your [NVIDIA card from this list here](https://nouveau.freedesktop.org/CodeNames.html). Alternatively you can take a look at the [Gentoo wiki](https://wiki.gentoo.org/wiki/NVIDIA#Feature_support).
 2. Check what driver packages you need to install from the table below
 
-| Driver name                                      | Base driver       | OpenGL             | OpenGL (multilib)        |
-| ------------------------------------------------ | ----------------- | ------------------ | ------------------------ |
-| Maxwell (NV110) series and newer                 | nvidia            | nvidia-utils       | lib32-nvidia-utils       |
-| Kepler (NVE0) series                             | nvidia-470xx-dkms | nvidia-470xx-utils | lib32-nvidia-470xx-utils |
-| GeForce 400/500/600 series cards [NVCx and NVDx] | nvidia-390xx      | nvidia-390xx-utils | lib32-nvidia-390xx-utils |
+| Driver name                                      | Kernel                      | Base driver       | OpenGL             | OpenGL (multilib)        |
+| ------------------------------------------------ | --------------------------- | ----------------- | ------------------ | ------------------------ |
+| Maxwell (NV110) series and newer                 | linux or linux-lts          | nvidia            | nvidia-utils       | lib32-nvidia-utils       |
+| Maxwell (NV110) series and newer                 | not linux and not linux-lts | nvidia-dkms       | nvidia-utils       | lib32-nvidia-utils       |
+| Kepler (NVE0) series                             | any                         | nvidia-470xx-dkms | nvidia-470xx-utils | lib32-nvidia-470xx-utils |
+| GeForce 400/500/600 series cards [NVCx and NVDx] | any                         | nvidia-390xx-dkms | nvidia-390xx-utils | lib32-nvidia-390xx-utils |
+| Tesla (NV50/G80-90-GT2XX)                        | any                         | nvidia-340xx-dkms | nvidia-340xx-utils | lib32-nvidia-340xx-utils |
 
 3. Install the correct Base driver, OpenGL, and OpenGL (multilib) packages
    - Example: `yay -S nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils`
@@ -55,25 +53,33 @@ In this step please complete all the parts: _Setting the Kernel Parameter_, _Add
 
 ### Setting the Kernel Parameter:
 
-Setting the kernel parameter depends on what bootloader you are using. Complete the part that describes the configuration steps for the bootloader you use. After that, continue to _Add Early Loading of NVIDIA Modules_.
+Setting the kernel parameter depends on what bootloader you are using and on the driver version. Complete only one of the options below (A, B, or C). After that, continue to _Add Early Loading of NVIDIA Modules_. You can check the driver version using the `nvidia-smi` -command that comes with the `nvidia-utils` -package
 
-#### For GRUB users:
+#### Option A) For driver versions >= 545
+
+1. Get the **nvidia.conf** -file from this repository and place it into the modprobe.d -folder
+   - `cd ~`
+   - `wget https://raw.githubusercontent.com/korvahannu/arch-nvidia-drivers-installation-guide/main/nvidia.conf`
+   - `sudo mv nvidia.conf /etc/modprobe.d/`
+2. Regenerate the initramfs with `sudo mkinitcpio -P`
+
+#### Option B) For GRUB users with driver version < 545
 
 1. Edit the GRUB configuration file:
    - `sudo nano /etc/default/grub`
    - Find the line with **GRUB_CMDLINE_LINUX_DEFAULT**
    - Append the words inside the quotes with **nvidia-drm.modeset=1**
      - Example: **GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"**
-   - Save the file with _CTRL+O_
+   - Save the file with _CTRL+S_ and close nano with _CTRL+X_
 2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`
 
-#### For systemd-boot users:
+#### Option C) For systemd-boot users with driver version < 545
 
 1. Navigate to the bootloader entries directory: `cd /boot/loader/entries/`
 2. Edit the appropriate **.conf** file for your Arch Linux boot entry
    - `sudo nano <filename>.conf`
 3. Append **nvidia-drm.modeset=1** to the **options** line
-4. Save the file with _CTRL+O_
+4. Save the file with _CTRL+S_ and close nano with _CTRL+X_
 
 ### Add Early Loading of NVIDIA Modules:
 
@@ -82,8 +88,8 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
    - Find the line that says **MODULES=()**
    - Update the line to: **MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)**
    - Find the line that says **HOOKS=()**
-   - On the same line, find the word **kms** inside the parenthesis and remove it
-   - Save the file with _CTRL+O_
+   - On the **HOOKS=()** line, find the word **kms** inside the parenthesis and remove it
+   - Save the file with _CTRL+S_ and close nano with _CTRL+X_
 2. Regenerate the initramfs with `sudo mkinitcpio -P`
 
 ### Adding the Pacman Hook:
@@ -95,9 +101,9 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
    - `nano nvidia.hook`
 3. Find the line that says **Target=nvidia**.
 4. Replace the word **nvidia** with the base driver you installed, e.g., **nvidia-470xx-dkms**
-   - The end result should look something like **Target=nvidia-470xx-dkms**
-5. Save the file with _CTRL+O_
-6. Move it to **/etc/pacman.d/hooks/** with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
+   - The edited line should look something like this: **Target=nvidia-470xx-dkms**
+5. Save the file with _CTRL+S_ and close nano with _CTRL+X_
+6. Move the file to **/etc/pacman.d/hooks/** with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
 
 ## Step 4: Reboot and enjoy!
 
