@@ -16,7 +16,7 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
 1. Update the system:
    `sudo pacman -Syu`
 2. Install required packages:
-   `sudo pacman -S base-devel linux-headers git --needed`
+   `sudo pacman -S base-devel linux-headers git nano --needed`
 3. Install the AUR helper, yay
    - `cd ~`
    - `git clone https://aur.archlinux.org/yay.git`
@@ -53,17 +53,9 @@ In this step please complete all the parts: _Setting the Kernel Parameter_, _Add
 
 ### Setting the Kernel Parameter:
 
-Setting the kernel parameter depends on what bootloader you are using and on the driver version. Complete only one of the options below (A, B, or C). After that, continue to _Add Early Loading of NVIDIA Modules_. You can check the driver version using the `nvidia-smi` -command that comes with the `nvidia-utils` -package
+Setting the kernel parameter depends on what bootloader you are using. Complete only one of the options below (A or B). After that, continue to _Add Early Loading of NVIDIA Modules_.
 
-#### Option A) For driver versions >= 545
-
-1. Get the **nvidia.conf** -file from this repository and place it into the modprobe.d -folder
-   - `cd ~`
-   - `wget https://raw.githubusercontent.com/korvahannu/arch-nvidia-drivers-installation-guide/main/nvidia.conf`
-   - `sudo mv nvidia.conf /etc/modprobe.d/`
-2. Regenerate the initramfs with `sudo mkinitcpio -P`
-
-#### Option B) For GRUB users with driver version < 545
+#### Option A) For GRUB users
 
 1. Edit the GRUB configuration file:
    - `sudo nano /etc/default/grub`
@@ -73,7 +65,7 @@ Setting the kernel parameter depends on what bootloader you are using and on the
    - Save the file with _CTRL+S_ and close nano with _CTRL+X_
 2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`
 
-#### Option C) For systemd-boot users with driver version < 545
+#### Option B) For systemd-boot users
 
 1. Navigate to the bootloader entries directory: `cd /boot/loader/entries/`
 2. Edit the appropriate **.conf** file for your Arch Linux boot entry
