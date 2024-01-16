@@ -100,3 +100,16 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
 ## Step 4: Reboot and enjoy!
 
 You can now safely reboot and enjoy the proprietary NVIDIA drivers. If you have any problems check the Arch Linux Wiki or the forums for common pitfalls and questions.
+
+## Troubleshooting :
+- To use the Plasma Wayland session with hardware acceleration on XWayland apps, you need:
+
+   - Xorg 1.20.12 or later.
+   - XWayland 21.1.2 or later.
+   - libxcb 1.1.7 or later.
+
+   see [KDE Wiki](https://community.kde.org/Plasma/Wayland/Nvidia)
+   
+- To use flatpaks you should also install the nVidia runtime extension. This should happen automatically when running `flatpak update`.  \
+   To install it manually, use:
+   - `flatpak install org.freedesktop.Platform.GL.nvidia-xxx #Replace xxx with your version number`
