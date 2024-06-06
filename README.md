@@ -96,7 +96,7 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
    - The edited line should look something like this: **Target=nvidia-470xx-dkms**
 5. Save the file with _CTRL+S_ and close nano with _CTRL+X_
 6. Move the file to **/etc/pacman.d/hooks/** with: `sudo mv ./nvidia.hook /etc/pacman.d/hooks/`
-
+note: make hooks directory if needed.
 ## Step 4: Reboot and enjoy!
 
 You can now safely reboot and enjoy the proprietary NVIDIA drivers. If you have any problems check the Arch Linux Wiki or the forums for common pitfalls and questions.
