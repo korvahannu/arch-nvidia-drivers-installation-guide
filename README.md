@@ -24,7 +24,7 @@ This is a quick tutorial on how you can install proprietary NVIDIA drivers for A
    - `makepkg -si`
 4. Enable multilib repository
    - `sudo nano /etc/pacman.conf`
-   - Uncomment the following lines by removing the # -character at the start them
+   - Uncomment the following lines by removing # - the character at the start of the line
      - **[multilib]**
      - **Include = /etc/pacman.d/mirrorlist**
    - Save the file with _CTRL+S_ and close nano with _CTRL+X_
