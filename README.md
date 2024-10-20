@@ -60,8 +60,9 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
 1. Edit the GRUB configuration file:
    - `sudo nano /etc/default/grub`
    - Find the line with **GRUB_CMDLINE_LINUX_DEFAULT**
-   - Append the words inside the quotes with **nvidia-drm.modeset=1**
-     - Example: **GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"**
+   - Append the words inside the quotes with **nvidia-drm.modeset=1**. If you are using Linux kernel 6.11 or newer, you must also add **nvidia-drm.fbdev=1**
+     - Example for Linux kernel 6.10 or older: **GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"**
+     - Example for Linux kernel 6.11 or newer: **GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1 nvidia-drm.fbdev=1"**
    - Save the file with _CTRL+S_ and close nano with _CTRL+X_
 2. Update the GRUB configuration: `sudo grub-mkconfig -o /boot/grub/grub.cfg`
 
@@ -71,6 +72,7 @@ Setting the kernel parameter depends on what bootloader you are using. Complete 
 2. Edit the appropriate **.conf** file for your Arch Linux boot entry
    - `sudo nano <filename>.conf`
 3. Append **nvidia-drm.modeset=1** to the **options** line
+   - If you are using Linux kernel 6.11 or newer, you must also add **nvidia-drm.fbdev=1**
 4. Save the file with _CTRL+S_ and close nano with _CTRL+X_
 
 ### Add Early Loading of NVIDIA Modules:
